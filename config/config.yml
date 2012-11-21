@@ -1,0 +1,17 @@
+elements:
+   happy: { valence: 1, arousal: 1 }
+   elated: { valence: 1, arousal: 1 }
+   excited: { valence: 1, arousal: 1 }
+   alert: { valence: 1, arousal: 1 }
+   upset: { valence: -1, arousal: 1 }
+   stressed: { valence: -1, arousal: 1 }
+   nervous: { valence: -1, arousal: 1 }
+   tense: { valence: -1, arousal: 1 }
+   fatigued: { valence: -1, arousal: -1 }
+   bored: { valence: -1, arousal: -1 }
+   depressed: { valence: -1, arousal: -1 }
+   sad: { valence: -1, arousal: -1 }
+   contented: { valence: 1, arousal: -1 }
+   serene: { valence: 1, arousal: -1 }
+   relaxed: { valence: 1, arousal: -1 }
+   calm: { valence: 1, arousal: -1 }

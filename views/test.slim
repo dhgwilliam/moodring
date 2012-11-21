@@ -1,0 +1,48 @@
+html
+  head
+    title Record your mood
+  body
+    h1 A list of mood elements
+    #form
+      h2#element_name
+      form
+        input type="radio" name="rating" value="1"
+        input type="radio" name="rating" value="2"
+        input type="radio" name="rating" value="3"
+        input type="radio" name="rating" value="4"
+        input type="radio" name="rating" value="5"
+        br
+        br
+        input id="back" type="button" name="rating" value="back"
+    script src="/js/jquery-1.8.3.js" type="text/javascript"
+
+    javascript:
+      $("input[type~=radio]").click(function() {
+        if (window.elements.length > 0) {
+          window.active_element = window.elements.shift();
+          $("#element_name").replaceWith('<h2 id="element_name">' + window.active_element[0] + '</h2>');
+          window.used_elements.push(window.active_element);
+        };
+      });
+
+    javascript:
+      $("input#back").click(function() {
+        if (window.used_elements.length > 1) {
+          window.elements.unshift(window.used_elements.pop());
+          window.elements.unshift(window.used_elements.pop());
+          window.active_element = window.elements.shift();
+          $("#element_name").replaceWith('<h2 id="element_name">' + window.active_element[0] + '</h2>');
+          window.used_elements.push(window.active_element);
+        }
+      });
+
+    javascript:
+      jQuery(function () {
+        $.getJSON('/elements.json', function(data) {
+          window.elements = $.makeArray(data);
+          window.used_elements = [];
+          window.active_element = window.elements.shift()
+          $("#element_name").replaceWith('<h2 id="element_name">' + window.active_element[0] + '</h2>');
+          window.used_elements.push(window.active_element);
+        });
+      }(jQuery));
