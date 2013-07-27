@@ -7,14 +7,38 @@ describe MoodTest do
       expect { MoodTest.new({ :date => Time.now }) }.to raise_error(ArgumentError, /must be instantiated/)
       expect { MoodTest.new({ :user => "david" }) }.to raise_error(ArgumentError, /must be instantiated/)
     end
+  end
+
+  describe 'instance' do
+    before(:all) do
+      @now = Time.now
+      @user = "david"
+      @m = MoodTest.new({:date => @now, :user => @user})
+    end
 
     it 'should exist when created' do
-      now = Time.now
-      user = "david"
+      expect(@m.date).to eq(@now)
+      expect(@m.user).to eq(@user)
+    end
 
-      m = MoodTest.new({:date => now, :user => user})
-      expect(m.date).to eq(now)
-      expect(m.user).to eq(user)
+    it 'should contain an empty answers array' do
+      expect(@m.answers).to eq([])
+    end
+
+    it 'should not be complete' do
+      expect(@m.complete?).to be_false
+    end
+  end
+
+  describe '#questions' do
+    before(:all) do
+      @now = Time.now
+      @user = "david"
+      @m = MoodTest.new({:date => @now, :user => @user})
+    end
+
+    it 'should return a list of moods' do
+      expect(@m.questions).to have(4).things
     end
   end
 end
