@@ -38,7 +38,7 @@ describe MoodTest do
     end
 
     it 'should return a list of moods' do
-      expect(@m.questions).to have(4).things
+      expect(@m.questions).to have_at_least(16).moods
     end
   end
 end
