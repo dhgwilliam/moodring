@@ -7,6 +7,12 @@ require 'httparty'
 
 MOODRING_URL = ENV['MOODRING_URL'] || 'localhost:4567'
 
+class MoodringAPI
+  def self.get(endpoint, v = 'v1')
+    HTTParty.get('http://' + MOODRING_URL + "/api/#{v}/" + endpoint)
+  end
+end
+
 opts = Slop.parse({:help => true}) do
   banner 'Usage: moodring.rb [options]'
 
@@ -17,6 +23,5 @@ opts = Slop.parse({:help => true}) do
 end
 
 if opts[:list]
-  response = HTTParty.get('http://' + MOODRING_URL + '/' + 'list')
-  puts response
+  puts MoodringAPI.get('list')
 end

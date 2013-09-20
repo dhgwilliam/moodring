@@ -5,7 +5,7 @@ require 'sinatra'
 require 'moodring'
 require 'yajl'
 
-get '/list' do
+get "/api/v1/list" do
   list = MoodList.moods.map {|x| x.name}
   Yajl::Encoder.encode(list)
 end
