@@ -1,1 +1,3 @@
 .rbenv*
+.DS_store
+dump.rdb
