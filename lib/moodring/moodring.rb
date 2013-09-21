@@ -16,12 +16,13 @@ end
 opts = Slop.parse({:help => true}) do
   banner 'Usage: moodring.rb [options]'
 
-  on :l, :list, 'List all known moods'
   on :uri, 'Print API URL' do
     puts MOODRING_URL
   end
-end
 
-if opts[:list]
-  puts MoodringAPI.get('list')
+  command 'list' do
+    run do
+      puts MoodringAPI.get('list')
+    end
+  end
 end
