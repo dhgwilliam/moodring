@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe MoodTest do
-  before(:all) do
+  before(:each) do
     @now = Time.now
     @user = "david"
     @m = MoodTest.new({:date => @now, :user => @user})
