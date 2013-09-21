@@ -1,5 +1,10 @@
 class MoodTest
+  include Redis::Objects
+  include DataMapper::Resource
+
   attr_reader :date, :user
+
+  property :id, Serial
 
   def initialize(args)
     @date = args[:date] || Time.now
@@ -24,3 +29,5 @@ class MoodTest
     @questions.shift.to_s
   end
 end
+
+MoodTest.finalize
