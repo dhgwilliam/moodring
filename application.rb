@@ -35,7 +35,6 @@ post '/api/v1/trait/new' do
   end
 end
 
-get '/api/v1/trait/:id' do
-  trait = Trait.get(params[:id])
-
+get '/api/v1/trait/by/name/:name' do
+  Yajl::Encoder.encode(Trait.first(:name => params[:name]).attributes)
 end

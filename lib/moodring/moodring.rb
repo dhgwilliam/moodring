@@ -49,7 +49,7 @@ opts = Slop.parse({:help => true}) do
     on :name=, 'Specify trait name'
     on :valence=, 'Specify trait valence'
     on :arousal=, 'Specify trait arousal'
-    
+
     run do |trait|
       if trait[:new]
         puts "Attempting to create trait #{trait[:name]}"
@@ -60,7 +60,7 @@ opts = Slop.parse({:help => true}) do
         })
       else
         puts "Retrieving info for trait #{trait[:name]}"
-        response = MoodringAPI.get("trait/#{trait[:name]}")
+        response = MoodringAPI.get("trait/by/name/#{trait[:name]}")
       end
       puts response.code
       puts response.body
