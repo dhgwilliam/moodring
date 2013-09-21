@@ -8,7 +8,7 @@ class TestQueue
   def stack
     unless @stack
       @stack = Array.new
-      MoodList.moods.each { |mood|
+      Trait.all.each { |mood|
         @stack << mood.name }
     end
     @stack
