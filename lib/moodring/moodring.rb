@@ -50,19 +50,18 @@ opts = Slop.parse({:help => true}) do
     on :valence=, 'Specify trait valence'
     on :arousal=, 'Specify trait arousal'
 
-    run do |trait|
+    run do |trait, args|
       if trait[:new]
-        puts "Attempting to create trait #{trait[:name]}"
         response = MoodringAPI.post("trait/new", {
           :name => trait[:name],
           :valence => trait[:valence],
           :arousal => trait[:arousal]
         })
       else
-        puts "Retrieving info for trait #{trait[:name]}"
-        response = MoodringAPI.get("trait/by/name/#{trait[:name]}")
+        name = trait[:name] || args.first
+        response = MoodringAPI.get("trait/by/name/#{name}")
       end
-      puts response.code
+      puts response.code unless response.code == 200
       puts response.body
     end
   end
