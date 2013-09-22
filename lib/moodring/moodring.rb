@@ -14,7 +14,7 @@ class MoodringAPI
     HTTParty.get('http://' + MOODRING_URL + "/api/#{MOODRING_API}/" + endpoint)
   end
 
-  def self.post(endpoint, opts)
+  def self.post(endpoint, opts = {})
     options = { :body => Yajl::Encoder.encode(opts) }
     HTTParty.post('http://' + MOODRING_URL + "/api/#{MOODRING_API}/" + endpoint, options)
   end
@@ -60,6 +60,18 @@ opts = Slop.parse({:help => true}) do
       else
         name = trait[:name] || args.first
         response = MoodringAPI.get("trait/by/name/#{name}")
+      end
+      puts response.code unless response.code == 200
+      puts response.body
+    end
+  end
+
+  command 'set' do
+    on :new, 'Initiate a new Set (test)'
+
+    run do |set|
+      if set[:new]
+        response = MoodringAPI.post("set/new")
       end
       puts response.code unless response.code == 200
       puts response.body
