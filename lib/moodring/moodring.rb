@@ -33,17 +33,6 @@ opts = Slop.parse({:help => true}) do
     end
   end
 
-  command 'test' do
-    on :new, 'Initiate test'
-    on :user=, 'Supply user id'
-
-    run do |test_opts|
-      response = MoodringAPI.post("test/#{test_opts[:user]}/new")
-      puts response.code
-      puts response.body
-    end
-  end
-
   command 'trait' do
     on :new, 'Create new trait'
     on :name=, 'Specify trait name'
@@ -66,15 +55,19 @@ opts = Slop.parse({:help => true}) do
     end
   end
 
-  command 'set' do
-    on :new, 'Initiate a new Set (test)'
+  command 'test' do
+    on :new, 'Initiate test'
+    on :user=, 'Supply user id'
+    on :id=, 'Supply test id'
 
-    run do |set|
-      if set[:new]
-        response = MoodringAPI.post("set/new")
+    run do |test|
+      if test[:new]
+        response = MoodringAPI.post("test/new", {:user => test[:user]})
+      else
+        response = MoodringAPI.get("test/#{test[:id]}")
       end
       puts response.code unless response.code == 200
-      puts response.body
+      puts Yajl::Parser.parse(response.body)
     end
   end
 end

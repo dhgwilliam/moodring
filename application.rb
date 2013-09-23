@@ -51,16 +51,17 @@ get '/api/v1/trait/by/name/:name' do
   Yajl::Encoder.encode(Trait.first(:name => params[:name]).attributes)
 end
 
-# TODO initiate test; the behavior of a test should be as follows:
-#
-# * a test belongs to a single user (for now, there is only one)
-# * a test has as many elements as there are traits (hash?)
-# * each test element has two qualities (key, value): trait, score
-# * for the time being, we'll clone the behavior of Moodscope, e.g. score from
-# 0..3
-# I just talked about it with Suzy and I'm going to call it a Set, borrowed
-# from volleyball, and a Set will have Frames, which refer to scored or
-# unscored Traits
-post '/api/v1/set/new' do
-  "Create a new Set"
+post '/api/v1/test/new' do
+  request.body.rewind
+  # client must submit user id
+  data = Yajl::Parser.parse(request.body.read)
+  test = Testing.new(:user => User.get(data["user"]))
+  if test.valid?
+    test.save
+    test.prime!
+    Yajl::Encoder.encode(test.attributes)
+  else
+    raise ValidationError, test.errors.values
+  end
 end
+
