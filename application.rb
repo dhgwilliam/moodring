@@ -12,6 +12,18 @@ require 'models'
 # XXX move to a more reasonable place
 DataMapper.finalize
 
+configure do
+  set :show_exceptions, false
+end
+
+# error handling
+class ValidationError < StandardError
+end
+
+error ValidationError do
+  env['sinatra.error'].message
+end
+
 # retrieve list of all Traits
 get '/api/v1/list' do
   list = Trait.all.map {|x| x.name}
@@ -30,7 +42,7 @@ post '/api/v1/trait/new' do
   if trait.valid?
     trait.save
   else
-    400
+    raise ValidationError, trait.errors.values
   end
 end
 
