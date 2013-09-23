@@ -1,4 +1,4 @@
-$:.unshift('lib', '.', 'app')
+$:.unshift('lib', '.', 'app/models')
 require 'rubygems'
 require 'bundler/setup'
 require 'sinatra'
@@ -6,8 +6,7 @@ require 'yajl'
 require 'config/redis'
 require 'config/datamapper'
 require 'moodring'
-require 'models/trait'
-require 'models/set'
+require 'models'
 
 # finalize all models
 # XXX move to a more reasonable place
